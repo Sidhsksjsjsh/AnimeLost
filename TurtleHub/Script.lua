@@ -96,8 +96,15 @@ local Enemy = {
        Weak = {}
 }
 
-local World = ""
+local World = {}
 
+while wait(0.5) do
+for _,SyncWorld in pairs(game:GetService("Workspace").EnemyNPCs:GetChildren()) do
+    table.insert(World, SyncWorld.Name)
+end
+end
+
+function TableFunc()
 for _,EnemyRankList in pairs(game:GetService("Workspace").EnemyNPCs[World]:GetChildren()) do
     table.insert(RankList, EnemyRankList.Name)
 end
@@ -121,6 +128,9 @@ end
 for _,EnemyWeak in pairs(game:GetService("Workspace").EnemyNPCs[World].Weak:GetChildren()) do
     table.insert(Enemy.Weak, EnemyWeak.Name)
 end
+end
+
+TableFunc()
 
 local Rank = ""
 
@@ -134,12 +144,15 @@ F:AddDropdown({
 })
 
 local Enemies = ""
+_G.TPFarm = false
 
-F:AddDropdown({
-       Name = "Select Monster",
-       Default = "",
-       Options = Weak
-       Callback = function(Value)
+F:AddToggle({
+     Name = "teleport",
+     Default = false,
+     Callback = function(Value)
+           _G.TPFarm = Value
+           while _G.TPFarm do
+           if _G.TPFarm == false then break end
            if Rank == "Weak" then
               Enemies = Enemy.Weak
        end
@@ -155,6 +168,10 @@ F:AddDropdown({
            if Rank == "Nightboss" then
               Enemies = Enemy.Nightboss
        end
+            posenemy = CFrame.new(game.Workspace.EnemyNPCs[World][Rank][Enemies].Position)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = posenemy
+       end
+       
    end    
 })
 
