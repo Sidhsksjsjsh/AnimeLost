@@ -140,6 +140,7 @@ F:AddDropdown({
        Options = {"Weak", "Strong", "Miniboss", "Boss", "Nightboss"},
        Callback = function(Value)
            Rank = Value
+           TableFunc()
    end    
 })
 
@@ -171,7 +172,7 @@ F:AddToggle({
             posenemy = CFrame.new(game.Workspace.EnemyNPCs[World][Rank][Enemies].Position)
             game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = posenemy
        end
-       
+       TableFunc()
    end    
 })
 
