@@ -40,7 +40,7 @@ M:AddToggle({
      Default = false,
      Callback = function(Value)
        _G.ConvertGems = Value
-       while _G.ConvertGems do
+       while wait(0.1) do
         if _G.ConvertGems == false then break end
          local args = {
     [1] = "All"
@@ -58,7 +58,7 @@ Name = "auto spin skill",
 Default = false,
 Callback = function(Value)
    _G.SpinSkill = Value
-   while _G.SpinSkill do
+   while wait(0.1) do
       if _G.SpinSkill == false then break end
       game:GetService("ReplicatedStorage").Modules.LBConnection.Remotes.Skill_Spin:FireServer()
       end
@@ -71,9 +71,9 @@ M:AddToggle({
 Name = "auto quest",
 Default = false,
 Callback = function(Value)
-   _G.SpinSkill = Value
-   while _G.SpinSkill do
-      if _G.SpinSkill == false then break end
+   _G.Quest = Value
+   while wait(0.1) do
+      if _G.Quest == false then break end
       local args = {
     [1] = "Get"
 }
@@ -168,7 +168,7 @@ F:AddToggle({
      Default = false,
      Callback = function(Value)
            _G.TPFarm = Value
-           while _G.TPFarm do
+           while wait(0.1) do
            if _G.TPFarm == false then break end
            local args = {
                      [1] = workspace.EnemyNPCs:FindFirstChild(GetTownName())[Rank]:FindFirstChild(EnemyName)
@@ -190,7 +190,7 @@ F:AddToggle({
      Default = false,
      Callback = function(Value)
          _G.Swing = Value
-         while _G.Swing do
+         while wait(0.1) do
          if _G.Swing == false then break end
          local Event = game:GetService("ReplicatedStorage").Modules.LBConnection.Remotes.attackFunc
          Event:FireServer()
@@ -203,7 +203,7 @@ F:AddToggle({
      Default = false,
      Callback = function(Value)
          Skill.Slot_1 = Value
-         while Skill.Slot_1 do
+         while wait(0.1) do
          if Skill.Slot_1 == false then break end
          local A_1 = "Slot1"
          local Event = game:GetService("ReplicatedStorage").Remotes["Send Information"]
@@ -219,7 +219,7 @@ F:AddToggle({
      Default = false,
      Callback = function(Value)
          Skill.Slot_2 = Value
-         while Skill.Slot_2 do
+         while wait(0.1) do
          if Skill.Slot_2 == false then break end
          local A_1 = "Slot2"
          local Event = game:GetService("ReplicatedStorage").Remotes["Send Information"]
@@ -233,7 +233,7 @@ F:AddToggle({
      Default = false,
      Callback = function(Value)
          _G.Re = Value
-         while _G.Re do
+         while wait(0.1) do
          if _G.Re == false then break end
          game:GetService("ReplicatedStorage").Modules.LBConnection.Remotes.RebirthRem:FireServer()
        end
