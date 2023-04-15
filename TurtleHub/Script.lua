@@ -26,6 +26,8 @@ Icon = "rbxassetid://13040484705",
 PremiumOnly = false
 })
 
+_G.ConvertGems = false
+
 M:AddButton({
 Name = "Free Magnet Gamepass",
 Callback = function()
@@ -33,6 +35,53 @@ Callback = function()
   end    
 })
 
+M:AddToggle({
+     Name = "Convert gems",
+     Default = false,
+     Callback = function(Value)
+       _G.ConvertGems = Value
+       while _G.ConvertGems do
+        if _G.ConvertGems == false then break end
+         local args = {
+    [1] = "All"
+}
+
+game:GetService("ReplicatedStorage").Remotes.convertGem:FireServer(unpack(args))
+       end
+   end    
+})
+
+_G.SpinSkill = false
+
+M:AddToggle({
+Name = "auto spin skill",
+Default = false,
+Callback = function(Value)
+   _G.SpinSkill = Value
+   while _G.SpinSkill do
+      if _G.SpinSkill == false then break end
+      game:GetService("ReplicatedStorage").Modules.LBConnection.Remotes.Skill_Spin:FireServer()
+      end
+end    
+})
+
+_G.Quest = false
+
+M:AddToggle({
+Name = "auto quest",
+Default = false,
+Callback = function(Value)
+   _G.SpinSkill = Value
+   while _G.SpinSkill do
+      if _G.SpinSkill == false then break end
+      local args = {
+    [1] = "Get"
+}
+
+game:GetService("ReplicatedStorage").Remotes.questStatus:FireServer(unpack(args))
+      end
+end    
+})
 
 
 T:AddButton({
@@ -81,66 +130,32 @@ Event:FireServer(A_1)
   end    
 })
 
-local Boss = {}
-local Miniboss = {}
-local Nightboss = {}
-local Strong = {}
-local Weak = {}
-local RankList = {}
-
-local Enemy = {
-       Boss = {},
-       Miniboss = {},
-       NightBoss = {},
-       Strong = {},
-       Weak = {}
-}
-
-local World = {}
-
-while wait(0.5) do
-for _,SyncWorld in pairs(game:GetService("Workspace").EnemyNPCs:GetChildren()) do
-    table.insert(World, SyncWorld.Name)
-end
-end
-
-function TableFunc()
-for _,EnemyRankList in pairs(game:GetService("Workspace").EnemyNPCs[World]:GetChildren()) do
-    table.insert(RankList, EnemyRankList.Name)
-end
-
-for _,EnemyBoss in pairs(game:GetService("Workspace").EnemyNPCs[World].Boss:GetChildren()) do
-    table.insert(Enemy.Boss, EnemyBoss.Name)
-end
-
-for _,EnemyMiniboss in pairs(game:GetService("Workspace").EnemyNPCs[World].Miniboss:GetChildren()) do
-    table.insert(Enemy.Miniboss, EnemyBoss.Name)
-end
-
-for _,EnemyNight in pairs(game:GetService("Workspace").EnemyNPCs[World]["Night Boss"]:GetChildren()) do
-    table.insert(Enemy.Nightboss, EnemyNight.Name)
-end
-
-for _,EnemyStrong in pairs(game:GetService("Workspace").EnemyNPCs[World].Strong:GetChildren()) do
-    table.insert(Enemy.Strong, EnemyStrong.Name)
-end
-
-for _,EnemyWeak in pairs(game:GetService("Workspace").EnemyNPCs[World].Weak:GetChildren()) do
-    table.insert(Enemy.Weak, EnemyWeak.Name)
-end
-end
-
-TableFunc()
-
 local Rank = ""
+local Town = {}
+
+function GetTownName()
+for _,TownCity in pairs(game:GetService("Workspace").EnemyNPCs:GetChildren()) do
+         table.insert(Town, TownCity.Name)
+         return Town
+end
+
+local EnemyName = ""
+
+F:AddTextbox({
+       Name = "Enter Enemy name",
+       Default = "Input",
+       TextDisappear = false,
+       Callback = function(Value)
+           EnemyName = Value
+   end  
+})
 
 F:AddDropdown({
-       Name = "Select Rank",
+       Name = "Select Enemy Rank",
        Default = "",
        Options = {"Weak", "Strong", "Miniboss", "Boss", "Nightboss"},
        Callback = function(Value)
            Rank = Value
-           TableFunc()
    end    
 })
 
@@ -148,31 +163,18 @@ local Enemies = ""
 _G.TPFarm = false
 
 F:AddToggle({
-     Name = "teleport",
+     Name = "Send Companions",
      Default = false,
      Callback = function(Value)
            _G.TPFarm = Value
            while _G.TPFarm do
            if _G.TPFarm == false then break end
-           if Rank == "Weak" then
-              Enemies = Enemy.Weak
+           local args = {
+                     [1] = workspace.EnemyNPCs:FindFirstChild(GetTownName())[Rank]:FindFirstChild(EnemyName)
+             }
+  
+game:GetService("ReplicatedStorage").Remotes.sendCompanions:FireServer(unpack(args))
        end
-           if Rank == "Strong" then
-              Enemies = Enemy.Strong
-       end
-           if Rank == "Miniboss" then
-              Enemies = Enemy.Miniboss
-       end
-           if Rank == "Boss" then
-              Enemies = Enemy.Boss
-       end
-           if Rank == "Nightboss" then
-              Enemies = Enemy.Nightboss
-       end
-            posenemy = CFrame.new(game.Workspace.EnemyNPCs[World][Rank][Enemies].Position)
-            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = posenemy
-       end
-       TableFunc()
    end    
 })
 
@@ -209,6 +211,8 @@ F:AddToggle({
    end    
 })
 
+_G.Re = false
+
 F:AddToggle({
      Name = "Auto skill (Skill: 2)",
      Default = false,
@@ -219,6 +223,18 @@ F:AddToggle({
          local A_1 = "Slot2"
          local Event = game:GetService("ReplicatedStorage").Remotes["Send Information"]
          Event:FireServer(A_1)
+       end
+   end    
+})
+
+F:AddToggle({
+     Name = "Auto Rebirth",
+     Default = false,
+     Callback = function(Value)
+         _G.Re = Value
+         while _G.Re do
+         if _G.Re == false then break end
+         game:GetService("ReplicatedStorage").Modules.LBConnection.Remotes.RebirthRem:FireServer()
        end
    end    
 })
