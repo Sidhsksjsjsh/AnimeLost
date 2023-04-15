@@ -138,6 +138,7 @@ for _,TownCity in pairs(game:GetService("Workspace").EnemyNPCs:GetChildren()) do
          table.insert(Town, TownCity.Name)
          return Town
 end
+end
 
 local EnemyName = ""
 
