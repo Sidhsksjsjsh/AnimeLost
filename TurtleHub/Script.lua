@@ -164,14 +164,15 @@ F:AddDropdown({
 
 local Enemies = ""
 _G.TPFarm = false
+_G.SC = false
 
 F:AddToggle({
      Name = "Send Companions",
      Default = false,
      Callback = function(Value)
-           _G.TPFarm = Value
+           _G.SC = Value
            while wait(VIP) do
-           if _G.TPFarm == false then break end
+           if _G.SC == false then break end
            local args = {
                      [1] = workspace.EnemyNPCs:FindFirstChild(GetTownName())[Rank]:FindFirstChild(EnemyName)
              }
